@@ -35,6 +35,7 @@
 # Load the necessary modules
 
 using CUDA
+using cuDNN
 using DINCAE
 using DINCAE_utils
 using Dates

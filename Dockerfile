@@ -30,6 +30,8 @@ RUN julia -e 'using Pkg; \
     Pkg.add(url="https://github.com/gher-uliege/DINCAE.jl", rev="main"); \
     Pkg.add(url="https://github.com/gher-uliege/DINCAE_utils.jl", rev="main"); \
     Pkg.add(["CUDA", "cuDNN", "NCDatasets", "PyPlot", "Dates"]); \
+    using CUDA; \
+    CUDA.set_runtime_version!(v"12.6"; local_toolkit=true); \
     Pkg.precompile()'
 
 # Copy the rest of the application

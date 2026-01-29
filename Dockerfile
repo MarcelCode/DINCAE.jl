@@ -27,8 +27,8 @@ WORKDIR /app/examples
 
 # Pre-install Julia packages in the examples project environment
 RUN julia --project=. -e 'using Pkg; \
-    Pkg.develop(url="https://github.com/gher-uliege/DINCAE.jl", rev="main"); \
-    Pkg.develop(url="https://github.com/gher-uliege/DINCAE_utils.jl", rev="main"); \
+    Pkg.add(url="https://github.com/gher-uliege/DINCAE.jl", rev="main"); \
+    Pkg.add(url="https://github.com/gher-uliege/DINCAE_utils.jl", rev="main"); \
     Pkg.add(["CUDA", "cuDNN", "NCDatasets", "PyPlot"]); \
     Pkg.instantiate(); \
     Pkg.precompile()'

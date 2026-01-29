@@ -25,14 +25,17 @@ COPY . .
 # Set working directory for running scripts
 WORKDIR /app/examples
 
-# Pre-install Julia packages in the examples project environment
-RUN julia --project=. -e 'using Pkg; \
-    Pkg.add([ \
-        Pkg.PackageSpec(url="https://github.com/gher-uliege/DINCAE.jl", rev="main"), \
-        Pkg.PackageSpec(url="https://github.com/gher-uliege/DINCAE_utils.jl", rev="main") \
-    ]); \
-    Pkg.add(["CUDA", "cuDNN", "NCDatasets", "PyPlot"]); \
-    Pkg.instantiate(); \
+# Pre-install Julia packages
+RUN julia -e 'using Pkg; \
+    Pkg.add(url="https://github.com/gher-uliege/DINCAE.jl", rev="main"); \
+    Pkg.add(url="https://github.com/gher-uliege/DINCAE_utils.jl", rev="main"); \
+    Pkg.add(["CUDA", "cuDNN", "NCDatasets", "PyPlot", "Dates"]); \
     Pkg.precompile()'
+
+# Copy the rest of the application
+COPY . .
+
+# Set working directory for running scripts
+WORKDIR /app/examples
 
 CMD ["julia", "--project=.", "DINCAE_tutorial.jl"]

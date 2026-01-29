@@ -1,3 +1,4 @@
+
 # Minimal Docker image for DINCAE.jl
 FROM nvidia/cuda:12.6.0-cudnn-runtime-ubuntu22.04
 
@@ -18,17 +19,18 @@ WORKDIR /app
 COPY Project.toml ./
 COPY examples/Project.toml ./examples/
 
-# Pre-install Julia packages
-RUN julia -e 'using Pkg; \
-    Pkg.add(url="https://github.com/gher-uliege/DINCAE.jl", rev="main"); \
-    Pkg.add(url="https://github.com/gher-uliege/DINCAE_utils.jl", rev="main"); \
-    Pkg.add(["CUDA", "cuDNN", "NCDatasets", "PyPlot"]); \
-    Pkg.precompile()'
-
 # Copy the rest of the application
 COPY . .
 
 # Set working directory for running scripts
 WORKDIR /app/examples
+
+# Pre-install Julia packages in the examples project environment
+RUN julia --project=. -e 'using Pkg; \
+    Pkg.add(url="https://github.com/gher-uliege/DINCAE.jl", rev="main"); \
+    Pkg.add(url="https://github.com/gher-uliege/DINCAE_utils.jl", rev="main"); \
+    Pkg.add(["CUDA", "cuDNN", "NCDatasets", "PyPlot", "Dates"]); \
+    Pkg.instantiate(); \
+    Pkg.precompile()'
 
 CMD ["julia", "--project=.", "DINCAE_tutorial.jl"]

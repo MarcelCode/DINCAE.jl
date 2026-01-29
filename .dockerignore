@@ -1,0 +1,9 @@
+.git
+.idea
+*.md
+docs/
+test/
+.github/
+*.swp
+*.swo
+*~

@@ -28,6 +28,19 @@ DINCAE is intended to be used with a [GPU](https://en.wikipedia.org/wiki/Graphic
 
 ## Installation
 
+### Docker (recommended for quick start)
+
+The easiest way to run DINCAE with GPU support is using Docker:
+
+```bash
+docker build -t dincae .
+docker run --gpus all -v ~/Data:/root/Data dincae
+```
+
+The volume mount (`-v ~/Data:/root/Data`) allows the container to save results to your host machine. Results will be saved to `~/Data/SST-AlboranSea-example/Results/`.
+
+### Native installation
+
 You need [Julia](https://julialang.org/downloads) (version 1.9 or later) to run `DINCAE`. The command line interface of Julia is sufficient for `DINCAE`.
 If you are using Linux (on a x86_64 CPU), installing and running Julia is as easy as running these shell commands:
 
